@@ -1,4 +1,4 @@
-import { useLocation, Outlet} from "react-router-dom";
+import { useLocation, Outlet } from "react-router-dom";
 import {
   Box,
   Items,
@@ -10,8 +10,8 @@ import {
 } from "./SearchResult.styled";
 
 const SearchResult = ({ name }) => {
-	const location = useLocation();
-	
+  const location = useLocation();
+
   return (
     <Items>
       {name.map(({ id, name, status, image }) => (

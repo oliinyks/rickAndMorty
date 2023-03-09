@@ -4,12 +4,14 @@ import { fetchByName, fetchAllCharacter } from "../../api";
 import SearchResult from "../SearchResult/SearchResult";
 import { AiOutlineSearch } from "react-icons/ai";
 import { toast } from "react-toastify";
+import { useSearchParams } from "react-router-dom";
 import { Form, Input, Button } from "./SearchForm.styled";
 
 const SearchForm = () => {
-  const [searchName, setSearchName] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [loader, setLoader] = useState(false);
+  const filter = searchParams.get("filter") ?? "";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,19 +19,20 @@ const SearchForm = () => {
       const resultData = data.results;
       const sortData = resultData.sort((a, b) => a.name.localeCompare(b.name));
       setSearchResult(sortData);
-	 };
+    };
 
     fetchData();
   }, []);
 
   const handleNameChange = (e) => {
-    setSearchName(e.currentTarget.value.toLowerCase());
+    const value = e.currentTarget.value;
+    setSearchParams(value !== "" ? { filter: value.toLowerCase() } : {});
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
 
-    if (searchName.trim() === "") {
+    if (filter.trim() === "") {
       return toast.info("Please select a name");
     }
     setLoader(true);
@@ -39,7 +42,7 @@ const SearchForm = () => {
 
   const fetchCharacter = async () => {
     try {
-      const character = await fetchByName(searchName);
+      const character = await fetchByName(filter);
       if (!character) {
         return toast.error("We did not find the character you requested");
       }
@@ -64,7 +67,7 @@ const SearchForm = () => {
           autoComplete="off"
           autoFocus
           placeholder="Filter by name..."
-          value={searchName}
+          value={filter}
           onChange={handleNameChange}
         />
       </Form>

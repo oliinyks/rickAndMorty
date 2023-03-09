@@ -23,7 +23,7 @@ export const Box = styled.div`
   @media (min-width: 400px) {
     display: grid;
     place-items: center;
-	 /* text-align: left; */
+    /* text-align: left; */
   }
 `;
 

@@ -3,13 +3,13 @@ import { lazy } from "react";
 import { SharedLayout } from "../SharedLayout/SharedLayout";
 import { NotFound } from "pages/NotFound/NotFound";
 
-const Home = lazy(() => import('../../pages/Home/Home'))
+const Home = lazy(() => import("../../pages/Home/Home"));
 const CharacterDetails = lazy(() =>
   import("../../pages/CharacterDetails/CharacterDetails")
 );
 
 function App() {
-	return (
+  return (
     <Routes>
       <Route path="/" element={<SharedLayout />}>
         <Route index element={<Home />} />
